@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package log;
+
+message Msg {
+    float a = 1; // b
+	float b = 2; // t
+    float c = 3; // d-gb
+}

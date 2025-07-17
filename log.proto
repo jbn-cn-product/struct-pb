@@ -3,7 +3,10 @@ syntax = "proto3";
 package log;
 
 message Msg {
-    float a = 1; // b
-	float b = 2; // t
-    float c = 3; // d-gb
+    float bttr = 1; 
+	float tmpr = 2;
+    float dk_gb = 3;
+    uint32 sec_dt_fc = 4;
+    uint32 sec_dt_c = 5;
+    uint32 sec_dt_bl = 6;
 }

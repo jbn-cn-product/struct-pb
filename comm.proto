@@ -3,5 +3,5 @@ syntax = "proto3";
 package comm;
 
 message NoticeSource {
-    bool client = 1;
+    bool phn = 1;
 }

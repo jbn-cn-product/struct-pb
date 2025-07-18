@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package communication;
+package comm;
 
 message NoticeSource {
     bool client = 1;

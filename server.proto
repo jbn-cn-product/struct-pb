@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package comm;
+
+message OpenRecognizeNotifyRequest {
+    message MetaData {
+        float yaw = 1;
+        float pitch = 2;
+        float roll = 3;
+    }
+
+    message Face {
+        repeated float feature = 1;
+        MetaData metadata = 2;
+    }
+
+    message Car {
+        string license_plate_number = 1;
+    }
+
+    message Cigarettes {
+        string class = 1;
+    }
+
+    message RecognizeResult {
+        Face face = 1;
+        Car car = 2;
+        repeated Cigarettes = 3;
+    }
+
+    uint32 recognize = 1;
+    RecognizeResult recognize_result = 2;
+    string image = 3;
+    uint64 task_id = 4;
+}
+
+message OpenRecognizeNotifyResponse {
+    message Specs = {
+        string cigarette_spec_name = 1;
+        string cigarette_spec_code = 2;
+        uint32 total_carton = 3;
+        uint32 total_pack = 4;
+        string suspicious_type = 5; 
+    }
+    message Cigarette {
+        repeated Specs totals = 1;
+        string image = 2;
+    }
+
+    uint32 code = 1;
+    Specs data = 2;
+}

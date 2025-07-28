@@ -25,11 +25,11 @@ message OpenRecognizeNotifyRequest {
     message RecognizeResult {
         Face face = 1;
         Car car = 2;
-        repeated Cigarettes = 3;
+        repeated Cigarettes cigarettes = 3;
     }
 
-    uint32 recognize = 1;
-    RecognizeResult recognize_result = 2;
+    uint32 type = 1;
+    RecognizeResult result = 2;
     string image = 3;
     uint64 task_id = 4;
 }
@@ -48,5 +48,5 @@ message OpenRecognizeNotifyResponse {
     }
 
     uint32 code = 1;
-    Specs data = 2;
+    Cigarette data = 2;
 }

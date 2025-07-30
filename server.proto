@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package comm;
+package server;
 
 message OpenRecognizeNotifyRequest {
     message MetaData {
@@ -28,7 +28,7 @@ message OpenRecognizeNotifyRequest {
         repeated Cigarettes cigarettes = 3;
     }
 
-    uint32 type = 1;
+    uint32 type = 1; // FACE: 1,CAR: 2,CIGARETTE: 4,
     RecognizeResult result = 2;
     string image = 3;
     uint64 task_id = 4;
@@ -47,6 +47,16 @@ message OpenRecognizeNotifyResponse {
         string image = 2;
     }
 
-    uint32 code = 1;
-    Cigarette data = 2;
+    uint32 errno = 1;
+    string errmsg = 2;
+    Cigarette data = 3;
+}
+
+message OpenHeartbeatRequest {
+    
+}
+
+message OpenHeartbeatResponse {
+    uint32 errno = 1;
+    string errmsg = 2;
 }

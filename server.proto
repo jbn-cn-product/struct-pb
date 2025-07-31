@@ -35,7 +35,7 @@ message OpenRecognizeNotifyRequest {
 }
 
 message OpenRecognizeNotifyResponse {
-    message Specs = {
+    message Specs {
         string cigarette_spec_name = 1;
         string cigarette_spec_code = 2;
         uint32 total_carton = 3;

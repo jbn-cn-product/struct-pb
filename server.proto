@@ -3,60 +3,46 @@ syntax = "proto3";
 package server;
 
 message OpenRecognizeNotifyRequest {
-    message MetaData {
-        float yaw = 1;
-        float pitch = 2;
-        float roll = 3;
-    }
-
-    message Face {
-        repeated float feature = 1;
-        MetaData metadata = 2;
-    }
-
-    message Car {
-        string license_plate_number = 1;
-    }
-
-    message Cigarettes {
-        string class = 1;
-    }
-
     message RecognizeResult {
-        Face face = 1;
-        Car car = 2;
-        repeated Cigarettes cigarettes = 3;
+        message Face {
+            message MetaData {
+                float yaw = 1;
+                float pitch = 2;
+                float roll = 3;
+            }
+            repeated float features = 1;
+            MetaData metadata = 2;
+            bytes image = 3;
+        }
+        message Car {
+            string license_plate_number = 1;
+            bytes image = 2;
+        }
+        message Cigarettes {
+            repeat string classes = 1;
+            bytes image = 2;
+        }
+        repeated Face faces = 1;
+        repeated Car cars = 2;
+        Cigarettes cigarettes = 3;
     }
-
-    uint32 type = 1; // FACE: 1,CAR: 2,CIGARETTE: 4,
+    uint64 task_id = 1;
     RecognizeResult result = 2;
-    string image = 3;
-    uint64 task_id = 4;
 }
 
 message OpenRecognizeNotifyResponse {
-    message Specs {
-        string cigarette_spec_name = 1;
-        string cigarette_spec_code = 2;
-        uint32 total_carton = 3;
-        uint32 total_pack = 4;
-        string suspicious_type = 5; 
-    }
     message Cigarette {
-        repeated Specs totals = 1;
+        message Spec {
+            string cigarette_spec_name = 1;
+            string cigarette_spec_code = 2;
+            uint32 total_carton = 3;
+            uint32 total_pack = 4;
+            string suspicious_type = 5; 
+        }
+        repeated Spec specs = 1;
         string image = 2;
     }
-
     uint32 errno = 1;
     string errmsg = 2;
     Cigarette data = 3;
-}
-
-message OpenHeartbeatRequest {
-    
-}
-
-message OpenHeartbeatResponse {
-    uint32 errno = 1;
-    string errmsg = 2;
 }

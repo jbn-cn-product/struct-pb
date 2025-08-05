@@ -12,15 +12,15 @@ message OpenRecognizeNotifyRequest {
             }
             repeated float feature = 1;
             MetaData metadata = 2;
-            bytes image = 3;
+            optional bytes image = 3;
         }
         message Car {
             string license_plate_number = 1;
-            bytes image = 2;
+            optional bytes image = 2;
         }
         message Cigarettes {
             repeated string classes = 1;
-            bytes image = 2;
+            optional bytes image = 2;
         }
         repeated Face faces = 1;
         repeated Car cars = 2;

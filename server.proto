@@ -10,7 +10,7 @@ message OpenRecognizeNotifyRequest {
                 float pitch = 2;
                 float roll = 3;
             }
-            repeated float features = 1;
+            repeated float feature = 1;
             MetaData metadata = 2;
             bytes image = 3;
         }

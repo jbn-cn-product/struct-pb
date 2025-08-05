@@ -19,7 +19,7 @@ message OpenRecognizeNotifyRequest {
             bytes image = 2;
         }
         message Cigarettes {
-            repeat string classes = 1;
+            repeated string classes = 1;
             bytes image = 2;
         }
         repeated Face faces = 1;

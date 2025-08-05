@@ -11,8 +11,9 @@ message OpenRecognizeNotifyRequest {
                 float roll = 3;
             }
             repeated float feature = 1;
-            MetaData metadata = 2;
-            optional bytes image = 3;
+            repeated int32 xyxy = 2;
+            MetaData metadata = 3;
+            optional bytes image = 4;
         }
         message Car {
             string license_plate_number = 1;

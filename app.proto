@@ -2,16 +2,25 @@ syntax = "proto3";
 
 package app;
 
-message Detect {
-    int32 type = 1;  // 0 - facecar, 1 - cigarette
-    bytes image = 2;
-}
+message App {
 
-// mobi -> edge -> camera
-message SnapshotReq {
-}
+    message Detect {
+        int32 type = 1;  // 0 - facecar, 1 - cigarette
+        bytes image = 2;
+    }
 
-// camera -> edge -> mobi
-message SnapshotResp {
-    bytes image = 1;
+    // mobi -> edge -> camera
+    message SnapshotReq {
+    }
+
+    // camera -> edge -> mobi
+    message SnapshotResp {
+        bytes image = 1;
+    }
+
+    oneof msg {
+        Detect detect = 1;
+        SnapshotReq snapshotreq = 2;
+        SnapshotResp snapshotresp = 3;
+    }
 }

@@ -6,3 +6,12 @@ message Detect {
     int32 type = 1; // 0 - facecar, 1 - cigarette
     bytes image = 2;
 }
+
+// mobi -> edge -> camera
+message SnapshotReq {
+}
+
+// camera -> edge -> mobi
+message SnapshotResp {
+    bytes image = 1;
+}

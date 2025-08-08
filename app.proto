@@ -3,7 +3,7 @@ syntax = "proto3";
 package app;
 
 message Detect {
-    int32 type = 1; // 0 - facecar, 1 - cigarette
+    int32 type = 1;  // 0 - facecar, 1 - cigarette
     bytes image = 2;
 }
 

@@ -2,14 +2,18 @@ syntax = "proto3";
 
 package app;
 
+message Task {
+    optional uint64 id = 1;
+}
+
+message Detect {
+    int32 type = 1;  // 0 - facecar, 1 - cigarette
+    bytes image = 2;
+}
+
 message Msg {
-
-    message Detect {
-        int32 type = 1;  // 0 - facecar, 1 - cigarette
-        bytes image = 2;
-    }
-
     oneof msg {
-        Detect detect = 1;
+        Task task = 1;
+        Detect detect = 2;
     }
 }

@@ -47,8 +47,9 @@ message OpenRecognizeNotifyResponse {
             uint32 total_pack = 4;
             string suspicious_type = 5; 
         }
-        repeated Spec specs = 1;
-        string image = 2;
+        uint64 record_id = 1;
+        repeated Spec specs = 2;
+        string image = 3;
     }
     uint32 errno = 1;
     string errmsg = 2;

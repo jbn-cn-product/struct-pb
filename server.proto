@@ -39,19 +39,6 @@ message OpenRecognizeNotifyRequest {
 }
 
 message OpenRecognizeNotifyResponse {
-    message Cigarette {
-        message Spec {
-            string cigarette_spec_name = 1;
-            string cigarette_spec_code = 2;
-            uint32 total_carton = 3;
-            uint32 total_pack = 4;
-            string suspicious_type = 5; 
-        }
-        uint64 record_id = 1;
-        repeated Spec specs = 2;
-        string image = 3;
-    }
     uint32 errno = 1;
     string errmsg = 2;
-    Cigarette data = 3;
 }

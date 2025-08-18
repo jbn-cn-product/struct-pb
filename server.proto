@@ -16,7 +16,7 @@ message OpenRecognizeNotifyRequest {
             optional bytes image = 4;
         }
         message Car {
-            string license_plate_number = 1;
+            string number = 1;
             optional bytes image = 2;
         }
         message Class {

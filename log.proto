@@ -2,9 +2,8 @@ syntax = "proto3";
 
 package log;
 
-message Msg {
-    float btr = 1; 
-    int32 tmpr = 2;
-    float dk_gb = 3;
-    uint32 sec_dt = 4;
+message Edge {
+    float battery = 1; 
+    int32 temperature = 2;
+    float disk_free_gb = 3;
 }

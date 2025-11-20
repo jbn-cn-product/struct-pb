@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package comm;
-
-message NoticeSource {
-    bool phn = 1;
-}

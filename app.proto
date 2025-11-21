@@ -32,7 +32,9 @@ message CigarettesResult {
     optional string task = 3;
 }
 
-
+message Handshake {
+    string id = 1;  // 记录仪, 边缘 -> 手机 
+}
 message DetectRequest {
     int32 type = 1;  // 0 - cigarette  手机 -> 边缘
     bytes image = 2;
@@ -41,12 +43,12 @@ message DetectResponse {
     CigarettesResult cigarettes_result = 1; // 边缘 -> 手机
     CarResult car_result = 2;               // 记录仪 -> 手机
     FaceResult face_result = 3;             // 记录仪 -> 手机
-
 }
 
 message Msg {
     oneof msg {
-        DetectRequest detect_request = 1;
-        DetectResponse detect_response = 2;
+        Handshake handshake = 1;
+        DetectRequest detect_request = 2;
+        DetectResponse detect_response = 3;
     }
 }

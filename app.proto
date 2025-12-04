@@ -13,6 +13,10 @@ message CarResult { // 记录仪 -> 手机
     bytes image = 2;
     optional string task = 3;
 }
+message LicenseResult { // 记录仪 -> 手机
+    bytes image = 1;
+    optional string task = 2;
+}
 message CigarettesResult { // 边缘 -> 手机 
     message Class {
         string class = 1;
@@ -44,6 +48,7 @@ message DetectResp {
     CigarettesResult cigarettes_result = 1; // 边缘 -> 手机
     CarResult car_result = 2;               // 记录仪 -> 手机
     FaceResult face_result = 3;             // 记录仪 -> 手机
+    LicenseResult license_result = 4;       // 记录仪 -> 手机
 }
 
 /* layer 0 */

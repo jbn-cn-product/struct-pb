@@ -65,5 +65,4 @@ message Msg {
         DetectReq detect_req = 4;
         DetectResp detect_resp = 5;
     }
-    optional 
 }

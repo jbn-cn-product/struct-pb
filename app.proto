@@ -2,20 +2,23 @@ syntax = "proto3";
 
 package app;
 
+/* layer custom */
+message Geo {
+    double lat = 1;
+    double lng = 2;
+}
+
 /* layer 2 */
 message FaceResult { // 记录仪 -> 手机 float yaw = 1; float pitch = 2; float roll = 3; repeated int32 xyxy = 2;      
     repeated float feature = 1;
     bytes image = 2;
-    optional string task = 3;
 }
 message CarResult { // 记录仪 -> 手机
     string plate_number = 1;
     bytes image = 2;
-    optional string task = 3;
 }
 message LicenseResult { // 记录仪 -> 手机
     bytes image = 1;
-    optional string task = 2;
 }
 message CigarettesResult { // 边缘 -> 手机 
     message Class {
@@ -27,7 +30,7 @@ message CigarettesResult { // 边缘 -> 手机
     }
     repeated Class classes = 1;
     bytes image = 2;
-    optional string task = 3;
+
 }
 
 /* layer 1 */
@@ -49,6 +52,8 @@ message DetectResp {
     CarResult car_result = 2;               // 记录仪 -> 手机
     FaceResult face_result = 3;             // 记录仪 -> 手机
     LicenseResult license_result = 4;       // 记录仪 -> 手机
+    optional string id_schedule = 5;        // 手机 -> 服务器
+    optional Geo geo = 6;                   // 手机 -> 服务器
 }
 
 /* layer 0 */
@@ -60,4 +65,5 @@ message Msg {
         DetectReq detect_req = 4;
         DetectResp detect_resp = 5;
     }
+    optional 
 }

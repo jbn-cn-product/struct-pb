@@ -44,14 +44,14 @@ message EdgeStatusResp {
     float batter = 2;
 }
 message DetectReq { // 手机 -> 边缘
-    int32 type = 1; // 0 - cigarette
+    int32 type = 1; // 0 - cigarette, 4 - license
     bytes image = 2;
 }
 message DetectResp {
     CigarettesResult cigarettes_result = 1; // 边缘 -> 手机
     CarResult car_result = 2;               // 记录仪 -> 手机
     FaceResult face_result = 3;             // 记录仪 -> 手机
-    LicenseResult license_result = 4;       // 记录仪 -> 手机
+    LicenseResult license_result = 4;       // 边缘 -> 手机
     optional string id_schedule = 5;        // 手机 -> 服务器
     optional Geo geo = 6;                   // 手机 -> 服务器
 }

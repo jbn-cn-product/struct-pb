@@ -17,9 +17,6 @@ message CarResult { // 记录仪 -> 手机
     string plate_number = 1;
     bytes image = 2;
 }
-message LicenseResult { // 记录仪 -> 手机
-    bytes image = 1;
-}
 message CigarettesResult { // 边缘 -> 手机 
     message Class {
         string class = 1;
@@ -30,7 +27,9 @@ message CigarettesResult { // 边缘 -> 手机
     }
     repeated Class classes = 1;
     bytes image = 2;
-
+}
+message LicenseResult { // 边缘 -> 手机
+    bytes image = 1;
 }
 
 /* layer 1 */
@@ -44,7 +43,7 @@ message EdgeStatusResp {
     float batter = 2;
 }
 message DetectReq { // 手机 -> 边缘
-    int32 type = 1; // 0 - cigarette, 4 - license
+    int32 type = 1; // 1 - cigarette, 4 - license
     bytes image = 2;
 }
 message DetectResp {

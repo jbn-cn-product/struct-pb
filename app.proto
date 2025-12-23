@@ -46,6 +46,12 @@ message DetectReq { // 手机 -> 边缘
     int32 type = 1; // 1 - cigarette, 4 - license
     bytes image = 2;
 }
+message RecordFile { // 记录仪 -> 手机
+    bytes video = 1;
+    bytes cover_image = 2;
+}
+message RecordNotice { // 手机 -> 记录仪
+}
 message DetectResp {
     CigarettesResult cigarettes_result = 1; // 边缘 -> 手机
     CarResult car_result = 2;               // 记录仪 -> 手机
@@ -63,5 +69,7 @@ message Msg {
         EdgeStatusResp edge_status_resq = 3;
         DetectReq detect_req = 4;
         DetectResp detect_resp = 5;
+        RecordFile record_file = 6;
+        RecordNotice record_notice = 7;
     }
 }

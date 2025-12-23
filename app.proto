@@ -12,6 +12,7 @@ message Geo {
 message FaceResult { // 记录仪 -> 手机 float yaw = 1; float pitch = 2; float roll = 3; repeated int32 xyxy = 2;      
     repeated float feature = 1;
     bytes image = 2;
+    float confidence = 3;
 }
 message CarResult { // 记录仪 -> 手机
     string plate_number = 1;

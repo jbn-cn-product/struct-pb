@@ -30,6 +30,7 @@ message CigarettesResult { // 边缘 -> 手机
     bytes image = 2;
 }
 message LicenseResult { // 边缘 -> 手机
+    repeated string texts = 2;
     bytes image = 1;
 }
 

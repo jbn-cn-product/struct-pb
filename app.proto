@@ -50,7 +50,7 @@ message EdgeStatusResp {
     float batter = 2;
 }
 message DetectReq { // 手机 -> 边缘
-    int32 type = 1; // 1 - cigarette, 4 - license
+    int32 type = 1; // 1 - cigarette, 40 - license_biz, 41 - license_cig
     bytes image = 2;
 }
 message RecordReq { // 手机 -> 记录仪

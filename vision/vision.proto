@@ -71,41 +71,38 @@ message EdgeToPhone {
         bytes image = 2;
     }
     // 盒子状态
-    message EdgeStatusResult {
+    message EdgeStatusResponse {
         int32 temperature = 1;
         float battery = 2;
     }
     Handshake handshake = 1;
     CigarettesResult cigarettes_result = 2;
     LicenseResult license_result = 3;
-    EdgeStatusResult edge_status_result = 4;
+    EdgeStatusResponse edge_status_response = 4;
 }
 
 /* ---------- 手机 -> 边缘 ---------- */
 message PhoneToEdge {
-    // 识别结果
-    message DetectResult {
+    // 请求进行识别
+    message DetectRequest {
         int32 type = 1; // 1 - cigarette, 40 - license_biz, 41 - license_cig
         bytes image = 2;
     }
     // 请求获取状态
     message EdgeStatusRequest {}
-    DetectResult detect_result = 1;
+    DetectRequest detect_request = 1;
     EdgeStatusRequest edge_status_request = 2;
 }
 
 /* ---------- 手机 -> 服务器 ---------- */
 message PhoneToServer {
-    // 计划
-    message Schedule {
-        message Geo { // 经纬度
-            double lat = 1;
-            double lng = 2;
-        }
-        optional Geo geo = 1;
-        optional string id = 2;
+    // 经纬度
+    message Geo {
+        double lat = 1;
+        double lng = 2;
     }
-    Schedule schedule = 1;
+    Geo geo = 1;
+    string id_schedule = 2;
 }
 
 /* ---------- 顶层消息 ---------- */

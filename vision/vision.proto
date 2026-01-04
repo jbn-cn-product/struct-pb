@@ -2,116 +2,92 @@ syntax = "proto3";
 
 package vision;
 
-/* ---------- 通用 ---------- */
+/* ---------- 数据类型 ---------- */
 
 // 握手消息
 message Handshake {
     string id = 1; // "bodycam" "edge"
 }
-
-/* ---------- 记录仪 -> 手机 ---------- */
-message BodycamToPhone {
-    // 人脸检测结果
-    message FaceResult {
-        message Landmarks { // 关键点
-            message Point { // 坐标
-                float x = 1;
-                float y = 2;
-            }
-            Point point_left_eye = 1;
-            Point point_right_eye = 2;
-            Point point_nose = 3;
-            Point point_left_mouth = 4;
-            Point point_right_mouth = 5;
+// 人脸检测结果
+message FaceResult {
+    message Landmarks { // 关键点
+        message Point { // 坐标
+            float x = 1;
+            float y = 2;
         }
-        bytes image = 1;
-        float confidence = 2;
-        Landmarks landmarks = 3;
+        Point point_left_eye = 1;
+        Point point_right_eye = 2;
+        Point point_nose = 3;
+        Point point_left_mouth = 4;
+        Point point_right_mouth = 5;
     }
-    // 车牌检测结果
-    message PlateResult {
-        bytes image = 1;
-        string number = 2;
-    }
-    // 录制文件
-    message RecordFile {
-        bytes video = 1;
-        bytes image = 2;
-    }
-    Handshake handshake = 1;
-    FaceResult face_result = 2;
-    PlateResult plate_result = 3;
-    RecordFile record_file = 4;
+    bytes image = 1;
+    float confidence = 2;
+    Landmarks landmarks = 3;
 }
-
-/* ---------- 手机 -> 记录仪 ---------- */
-message PhoneToBodycam {
-    // 录制通知
-    message RecordNotice {}
-    RecordNotice record_notice = 1;
+// 车牌检测结果
+message PlateResult {
+    bytes image = 1;
+    string number = 2;
 }
-
-/* ---------- 边缘 -> 手机 ---------- */
-message EdgeToPhone {
-    // 烟包识别结果
-    message CigarettesResult {
-        message Class { // 类别
-            string class = 1;
-            uint32 x1 = 2;
-            uint32 x2 = 3;
-            uint32 y1 = 4;
-            uint32 y2 = 5;
-        }
-        repeated Class classes = 1;
-        bytes image = 2;
-    }
-    // 证件识别结果
-    message LicenseResult {
-        repeated string texts = 1;
-        bytes image = 2;
-    }
-    // 盒子状态
-    message EdgeStatusResponse {
-        int32 temperature = 1;
-        float battery = 2;
-    }
-    Handshake handshake = 1;
-    CigarettesResult cigarettes_result = 2;
-    LicenseResult license_result = 3;
-    EdgeStatusResponse edge_status_response = 4;
+// 录制请求
+message RecordRequest {}
+// 录制响应
+message RecordResponse {
+    bytes video = 1;
+    bytes image = 2;
 }
-
-/* ---------- 手机 -> 边缘 ---------- */
-message PhoneToEdge {
-    // 请求进行识别
-    message DetectRequest {
-        int32 type = 1; // 1 - cigarette, 40 - license_biz, 41 - license_cig
-        bytes image = 2;
+// 烟包识别结果
+message CigarettesResult {
+    message Class { // 类别
+        string class = 1;
+        uint32 x1 = 2;
+        uint32 x2 = 3;
+        uint32 y1 = 4;
+        uint32 y2 = 5;
     }
-    // 请求获取状态
-    message EdgeStatusRequest {}
-    DetectRequest detect_request = 1;
-    EdgeStatusRequest edge_status_request = 2;
+    repeated Class classes = 1;
+    bytes image = 2;
 }
-
-/* ---------- 手机 -> 服务器 ---------- */
-message PhoneToServer {
+// 证件识别结果
+message LicenseResult {
+    repeated string texts = 1;
+    bytes image = 2;
+}
+// 盒子状态响应
+message EdgeStatusResponse {
+    int32 temperature = 1;
+    float battery = 2;
+}
+// 盒子状态请求
+message EdgeStatusRequest {}
+// 识别请求
+message DetectRequest {
+    int32 type = 1; // 1 - cigarette, 40 - license_biz, 41 - license_cig
+    bytes image = 2;
+}
+// 计划
+message Schedule {
     // 经纬度
     message Geo {
         double lat = 1;
         double lng = 2;
     }
     Geo geo = 1;
-    string id_schedule = 2;
+    string id = 2;
 }
 
-/* ---------- 顶层消息 ---------- */
+/* ---------- 包装消息 ---------- */
 message Msg {
-    oneof msg {
-        BodycamToPhone bodycam_to_phone = 1;
-        PhoneToBodycam phone_to_bodycam = 2;
-        EdgeToPhone edge_to_phone = 3;
-        PhoneToEdge phone_to_edge = 4;
-        PhoneToServer phone_to_server = 5;
-    }
+    Handshake handshake = 1;
+    FaceResult face_result = 2;
+    PlateResult plate_result = 3;
+    RecordRequest record_request = 4;
+    RecordResponse record_response = 5;
+    CigarettesResult cigarettes_result = 6;
+    LicenseResult license_result = 7;
+    EdgeStatusResponse edge_status_response = 8;
+    EdgeStatusRequest edge_status_request = 9;
+    DetectRequest detect_request = 10;
+    Schedule schedule = 11;
 }

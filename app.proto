@@ -36,14 +36,14 @@ message CigarettesResult { // 边缘 -> 手机
 }
 message LicenseResult { // 边缘 -> 手机
     message Bbox {
-        uint32 x1 = 1;
-        uint32 x2 = 2;
-        uint32 y1 = 3;
-        uint32 y2 = 4;
+        string text = 1;
+        uint32 x1 = 2;
+        uint32 x2 = 3;
+        uint32 y1 = 4;
+        uint32 y2 = 5;
     }
-    repeated string texts = 1;
+    repeated Bbox bboxes = 1;
     bytes image = 2;
-    repeated Bbox bbox = 3;
 }
 
 /* layer 1 */

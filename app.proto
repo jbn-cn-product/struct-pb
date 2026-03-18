@@ -48,6 +48,9 @@ message LicenseResult { // 边缘 -> 手机
 /* layer 1 */
 message Handshake { // 记录仪, 边缘 -> 手机
     string id = 1; // "bodycam" "edge"
+    string version = 2;
+    string hardware_sn = 3;
+    string activate_time = 4; // yyyyMMddHHmmss
 }
 message EdgeStatusReq {
 }
@@ -74,6 +77,12 @@ message DetectResp {
     optional Geo geo = 6;                   // 手机 -> 服务器
     optional string id_retail = 7;          // 手机 -> 服务器
 }
+message UpdateApp {
+    bytes file = 1;
+    string version = 2;
+    string md5 = 3;
+    int32 size = 4;
+}
 
 /* layer 0 */
 message Msg {
@@ -85,5 +94,6 @@ message Msg {
         DetectResp detect_resp = 5;
         RecordReq record_req = 6;
         RecordResp record_resp = 7;
+        UpdateApp update_app = 8;
     }
 }

@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package vision;
+
+// 坐标
+message Point {
+    int32 x = 1;
+    int32 y = 2;
+}
+
+// 框
+message Box {
+    Point point = 1;
+    int32 width = 2;
+    int32 height = 3;
+}
+
+// 人脸检测
+message FaceDetResult {
+    bytes image = 1;
+    float confidence = 2;
+    Point left_eye = 3;
+    Point right_eye = 4;
+    Point nose = 5;
+    Point left_mouth = 6;
+    Point right_mouth = 7;
+}
+
+// 车牌识别
+message PlateRecResult {
+    bytes image = 1;
+    string number = 2;
+}
+
+// 烟包检测+识别
+message CigaretteResult {
+    message Result {
+        Box box = 1;
+        int32 class_id = 2;
+    }
+    bytes image = 1;
+    repeated Result results = 2;
+}
+
+// 文字检测+识别
+message OcrResult {
+    message Result {
+        Box box = 1;
+        string text = 2;
+    }
+    bytes image = 1;
+    repeated Result results = 2;
+}

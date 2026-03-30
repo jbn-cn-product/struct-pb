@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package log;
-
-message Edge {
-    float battery = 1; 
-    int32 temperature = 2;
-    float disk_free_gb = 3;
-}

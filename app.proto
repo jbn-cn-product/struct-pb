@@ -77,11 +77,14 @@ message DetectResp {
     optional Geo geo = 6;                   // 手机 -> 服务器
     optional string id_retail = 7;          // 手机 -> 服务器
 }
-message UpdateApp {
+message UpdateApp { // 手机 -> 记录仪, 边缘
     bytes file = 1;
     string version = 2;
     string md5 = 3;
     int32 size = 4;
+}
+message TaskNotice { // 手机 -> 记录仪
+    bool status = 1; // true开始 false结束
 }
 
 /* layer 0 */
@@ -95,5 +98,6 @@ message Msg {
         RecordReq record_req = 6;
         RecordResp record_resp = 7;
         UpdateApp update_app = 8;
+        TaskNotice task_notice = 9;
     }
 }

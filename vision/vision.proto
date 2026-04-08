@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+package vision;
+
+/* ----------数据层，只定义数据结构，不直接发送---------- */
+
+// 框
+message Box {
+    message Point {
+        int32 x = 1;
+        int32 y = 2;
+    }
+    Point point = 1;
+    int32 width = 2;
+    int32 height = 3;
+}
+
+// 人脸
+message FaceResult {
+    bytes image = 1;
+    float confidence = 2;
+}
+
+// 车牌
+message PlateResult {
+    bytes image = 1;
+    string number = 2;
+}
+
+// 烟包
+message CigaretteResult {
+    message Result {
+        Box box = 1;
+        int32 class_id = 2;
+    }
+    bytes image = 1;
+    repeated Result results = 2;
+}
+
+// 文本
+message OcrResult {
+    message Result {
+        Box box = 1;
+        string text = 2;
+    }
+    bytes image = 1;
+    repeated Result results = 2;
+}
+
+// 零售户信息
+message Retail {
+    message Geo {
+        double longitude = 1;   // 经度
+        double latitude = 2;    // 纬度
+    }
+    string id = 1;
+    string schedule = 2;
+    Geo geo = 3;
+}
+
+/* ----------消息层，消息的完整个体---------- */
+
+// 握手消息
+message Handshake {
+    string name = 1;
+    string version = 2;
+    optional string sn = 3;
+    optional string activate_time = 4; // yyyyMMddHHmmss
+}
+
+// 盒子状态请求
+message EdgeStatusRequest {}
+
+// 盒子状态响应
+message EdgeStatusResponse {
+    int32 temperature = 1;
+    float battery = 2;
+}
+
+// 检测请求
+message DetectRequest {
+    enum Type {
+        CIGARETTE_PACK = 0;
+        LICENSE_BUSINESS = 1;
+        LICENSE_TOBACCO = 2;
+        LICENSE_SIGN = 3;
+    }
+    bytes image = 1;
+    Type type = 2;
+}
+
+// 检测响应
+message DetectResponse {
+    FaceResult face_result = 1;
+    PlateResult plate_result = 2;
+    CigaretteResult cigarette_result = 3;
+    OcrResult ocr_result = 4;
+    optional Retail retail = 5;
+}
+
+// 录制请求
+message RecordRequest {}
+
+// 录制响应
+message RecordResponse {
+    bytes video = 1;
+    bytes cover_image = 2;
+}
+
+// 升级包
+message UpdatePack {
+    bytes file = 1;
+    string version = 2;
+    string md5 = 3;
+    int32 size = 4;
+}
+
+/* ----------顶层，包装所有消息---------- */
+message Msg {
+    oneof msg {
+        Handshake handshake = 1;
+        EdgeStatusRequest edge_status_request = 2;
+        EdgeStatusResponse edge_status_response = 3;
+        DetectRequest detect_request = 4;
+        DetectResponse detect_response = 5;
+        RecordRequest record_request = 6;
+        RecordResponse record_response = 7;
+        UpdatePack update_pack = 8;
+    }
+}

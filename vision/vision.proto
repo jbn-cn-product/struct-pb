@@ -2,129 +2,141 @@ syntax = "proto3";
 
 package vision;
 
-/* ----------数据层，只定义数据结构，不直接发送---------- */
+message Handshake {
+    enum Device {
+        BODYCAM = 0;
+        EDGE = 1;
+        PHONE = 2;
+        SERVER = 3;
+    }
+    Device device = 1;
+    string version = 2;
+    optional string hardware_sn = 3;
+    optional string activate_time = 4;
+}
 
-// 框
-message Box {
+message EdgeStatusRequest {}
+message EdgeStatusResponse {
+    float temperature = 1;
+    float battery = 2;
+}
+
+message InferRequest {
+    enum InferObj {
+        FACE = 0;
+        PLATE = 1;
+        CIG_PACK = 2;
+        CIG_LICENSE = 3;
+        SHOP_LICENSE = 4;
+        SHOP_SIGN = 5;
+    }
+    enum InferType {
+        DET = 0;
+        REC = 1;
+    }
+    bytes image = 1;
+    InferObj obj = 2;
+    InferType type = 3;
+}
+message InferResponse {
     message Point {
         int32 x = 1;
         int32 y = 2;
     }
-    Point point = 1;
-    int32 width = 2;
-    int32 height = 3;
-}
-
-// 人脸
-message FaceResult {
-    bytes image = 1;
-    float confidence = 2;
-}
-
-// 车牌
-message PlateResult {
-    bytes image = 1;
-    string number = 2;
-}
-
-// 烟包
-message CigaretteResult {
-    message Result {
-        Box box = 1;
-        int32 class_id = 2;
+    message Box {
+        Point point = 1;
+        int32 w = 2;
+        int32 h = 3;
     }
-    bytes image = 1;
-    repeated Result results = 2;
-}
-
-// 文本
-message OcrResult {
-    message Result {
+    message Det {
         Box box = 1;
-        string text = 2;
+        float confidence = 2;
     }
-    bytes image = 1;
-    repeated Result results = 2;
+    message FaceDet {
+        Det det = 1;
+        Point left_eye = 2;
+        Point right_eye = 3;
+        Point nose = 4;
+        Point left_mouth = 5;
+        Point right_mouth = 6;
+    }
+    message FaceRec {
+        repeated float features = 1;
+    }
+    message PlateDet {
+        Det det = 1;
+        Point left_top = 2;
+        Point right_top = 3;
+        Point right_bottom = 4;
+        Point left_bottom = 5;
+    }
+    message PlateRec {
+        string number = 1;
+    }
+    message CigPackRec {
+        int32 class = 1;
+    }
+    message TextRec {
+        string text = 1;
+    }
+    repeated FaceDet     face_det = 1;
+    repeated FaceRec     face_rec = 2;
+    repeated PlateDet    plate_det = 3;
+    repeated PlateRec    plate_rec = 4;
+    repeated Det         cig_pack_det = 5;
+    repeated CigPackRec  cig_pack_rec = 6;
+    repeated Det         cig_license_det = 7;
+    repeated TextRec     cig_license_rec = 8;
+    repeated Det         shop_license_det = 9;
+    repeated TextRec     shop_license_rec = 10;
+    repeated Det         shop_sign_det = 11;
+    repeated TextRec     shop_sign_rec = 12;
 }
 
-// 零售户信息
-message Retail {
+message DetectImage {
+    repeated bytes face_images = 1;
+    repeated bytes plate_images = 2;
+}
+
+message RecordRequest {}
+message RecordResponse {
+    bytes video = 1;
+    bytes cover_image = 2;
+}
+
+message TaskNotice {
+    bool status = 1;
+}
+
+message RetailInfo {
     message Geo {
-        double longitude = 1;   // 经度
-        double latitude = 2;    // 纬度
+        double lat = 1;
+        double lng = 2;
     }
     string id = 1;
     string schedule = 2;
     Geo geo = 3;
 }
 
-/* ----------消息层，消息的完整个体---------- */
-
-// 握手消息
-message Handshake {
-    string name = 1;
-    string version = 2;
-    optional string sn = 3;
-    optional string activate_time = 4; // yyyyMMddHHmmss
-}
-
-// 盒子状态请求
-message EdgeStatusRequest {}
-
-// 盒子状态响应
-message EdgeStatusResponse {
-    int32 temperature = 1;
-    float battery = 2;
-}
-
-// 检测请求
-message DetectRequest {
-    enum Type {
-        CIGARETTE_PACK = 0;
-        LICENSE_BUSINESS = 1;
-        LICENSE_TOBACCO = 2;
-        LICENSE_SIGN = 3;
-    }
-    bytes image = 1;
-    Type type = 2;
-}
-
-// 检测响应
-message DetectResponse {
-    FaceResult face_result = 1;
-    PlateResult plate_result = 2;
-    CigaretteResult cigarette_result = 3;
-    OcrResult ocr_result = 4;
-    optional Retail retail = 5;
-}
-
-// 录制请求
-message RecordRequest {}
-
-// 录制响应
-message RecordResponse {
-    bytes video = 1;
-    bytes cover_image = 2;
-}
-
-// 升级包
-message UpdatePack {
+message UpdateApp {
     bytes file = 1;
     string version = 2;
     string md5 = 3;
     int32 size = 4;
 }
 
-/* ----------顶层，包装所有消息---------- */
 message Msg {
     oneof msg {
         Handshake handshake = 1;
         EdgeStatusRequest edge_status_request = 2;
         EdgeStatusResponse edge_status_response = 3;
-        DetectRequest detect_request = 4;
-        DetectResponse detect_response = 5;
-        RecordRequest record_request = 6;
-        RecordResponse record_response = 7;
-        UpdatePack update_pack = 8;
+        InferRequest infer_request = 4;
+        InferResponse infer_response = 5;
+        DetectImage detect_image = 6;
+        RecordRequest record_request = 7;
+        RecordResponse record_response = 8;
+        TaskNotice task_notice = 9;
+        RetailInfo retail_info = 10;
+        UpdateApp update_app = 11;
     }
 }

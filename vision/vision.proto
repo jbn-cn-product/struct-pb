@@ -2,14 +2,15 @@ syntax = "proto3";
 
 package vision;
 
+enum Device {
+    BODYCAM = 0;
+    EDGE = 1;
+    PHONE = 2;
+    SERVER = 3;
+}
+
 message Handshake {
-    enum Device {
-        BODYCAM = 0;
-        EDGE = 1;
-        PHONE = 2;
-        SERVER = 3;
-    }
-    Device device = 1;
+    Device self = 1;
     string version = 2;
     optional string hardware_sn = 3;
     optional string activate_time = 4;
@@ -33,6 +34,7 @@ message InferRequest {
     enum InferType {
         DET = 0;
         REC = 1;
+        BOTH = 2; // 检测+识别
     }
     bytes image = 1;
     InferObj obj = 2;
@@ -105,7 +107,7 @@ message RecordResponse {
 }
 
 message TaskNotice {
-    bool status = 1;
+    bool status = 1; // true开始 false结束
 }
 
 message RetailInfo {
@@ -125,18 +127,27 @@ message UpdateApp {
     int32 size = 4;
 }
 
+// 顶层结构，所有消息在这里包装
 message Msg {
+    Device target = 1;
     oneof msg {
-        Handshake handshake = 1;
-        EdgeStatusRequest edge_status_request = 2;
-        EdgeStatusResponse edge_status_response = 3;
-        InferRequest infer_request = 4;
-        InferResponse infer_response = 5;
-        DetectImage detect_image = 6;
-        RecordRequest record_request = 7;
-        RecordResponse record_response = 8;
-        TaskNotice task_notice = 9;
-        RetailInfo retail_info = 10;
-        UpdateApp update_app = 11;
+        Handshake handshake = 2;
+        EdgeStatusRequest edge_status_request = 3;
+        EdgeStatusResponse edge_status_response = 4;
+        InferRequest infer_request = 5;
+        InferResponse infer_response = 6;
+        DetectImage detect_image = 7;
+        RecordRequest record_request = 8;
+        RecordResponse record_response = 9;
+        TaskNotice task_notice = 10;
+        RetailInfo retail_info = 11;
+        UpdateApp update_app = 12;
     }
+}
+
+// 仅作为蓝牙广播使用
+message hotspot {
+    string ssid = 1;
+    string password = 2;
+    int32 port = 3;
 }

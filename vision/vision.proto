@@ -16,6 +16,8 @@ message Handshake {
     optional string activate_time = 4;
 }
 
+message EdgeBuzz {}
+
 message EdgeStatusRequest {}
 message EdgeStatusResponse {
     float temperature = 1;
@@ -132,16 +134,17 @@ message Msg {
     Device target = 1;
     oneof msg {
         Handshake handshake = 2;
-        EdgeStatusRequest edge_status_request = 3;
-        EdgeStatusResponse edge_status_response = 4;
-        InferRequest infer_request = 5;
-        InferResponse infer_response = 6;
-        DetectImage detect_image = 7;
-        RecordRequest record_request = 8;
-        RecordResponse record_response = 9;
-        TaskNotice task_notice = 10;
-        RetailInfo retail_info = 11;
-        UpdateApp update_app = 12;
+        EdgeBuzz edge_buzz = 3;
+        EdgeStatusRequest edge_status_request = 4;
+        EdgeStatusResponse edge_status_response = 5;
+        InferRequest infer_request = 6;
+        InferResponse infer_response = 7;
+        DetectImage detect_image = 8;
+        RecordRequest record_request = 9;
+        RecordResponse record_response = 10;
+        TaskNotice task_notice = 11;
+        RetailInfo retail_info = 12;
+        UpdateApp update_app = 13;
     }
 }
 

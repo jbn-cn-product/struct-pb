@@ -148,9 +148,7 @@ message Msg {
     }
 }
 
-// 仅作为蓝牙广播使用
-message hotspot {
+message Broadcast {
     string ssid = 1;
     string password = 2;
-    int32 port = 3;
 }

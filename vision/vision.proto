@@ -25,81 +25,56 @@ message EdgeStatusResponse {
 }
 
 message InferRequest {
-    enum InferObj {
-        FACE = 0;
-        PLATE = 1;
-        CIG_PACK = 2;
-        CIG_LICENSE = 3;
-        SHOP_LICENSE = 4;
-        SHOP_SIGN = 5;
-    }
-    enum InferType {
-        DET = 0;
-        REC = 1;
-        BOTH = 2; // 检测+识别
+    enum Type {
+        FACE = 0;           // 人脸
+        PLATE = 1;          // 车牌
+        CIG_PACK = 2;       // 烟包
+        CIG_LICENSE = 3;    // 烟草证
+        SHOP_LICENSE = 4;   // 营业执照
+        SHOP_SIGN = 5;      // 店铺招牌
     }
     bytes image = 1;
-    InferObj obj = 2;
-    InferType type = 3;
+    Type type = 2;
 }
 message InferResponse {
-    message Point {
-        int32 x = 1;
-        int32 y = 2;
-    }
     message Box {
+        message Point {
+            int32 x = 1;
+            int32 y = 2;
+        }
         Point point = 1;
         int32 w = 2;
         int32 h = 3;
     }
-    message Det {
-        Box box = 1;
-        float confidence = 2;
-    }
-    message FaceDet {
-        Det det = 1;
-        Point left_eye = 2;
-        Point right_eye = 3;
-        Point nose = 4;
-        Point left_mouth = 5;
-        Point right_mouth = 6;
-    }
-    message FaceRec {
+    message Face {
         repeated float features = 1;
+        bytes image = 2;
     }
-    message PlateDet {
-        Det det = 1;
-        Point left_top = 2;
-        Point right_top = 3;
-        Point right_bottom = 4;
-        Point left_bottom = 5;
-    }
-    message PlateRec {
+    message Plate {
         string number = 1;
+        bytes image = 2;
     }
-    message CigPackRec {
+    message CigPack {
         int32 class = 1;
+        Box box = 2;
     }
-    message TextRec {
+    message CigLicense {
+        string text = 1;
+        Box box = 2;
+    }
+    message ShopLicense {
+        string text = 1;
+        Box box = 2;
+    }
+    message ShopSign {
         string text = 1;
     }
-    repeated FaceDet     face_det = 1;
-    repeated FaceRec     face_rec = 2;
-    repeated PlateDet    plate_det = 3;
-    repeated PlateRec    plate_rec = 4;
-    repeated Det         cig_pack_det = 5;
-    repeated CigPackRec  cig_pack_rec = 6;
-    repeated Det         cig_license_det = 7;
-    repeated TextRec     cig_license_rec = 8;
-    repeated Det         shop_license_det = 9;
-    repeated TextRec     shop_license_rec = 10;
-    repeated Det         shop_sign_det = 11;
-    repeated TextRec     shop_sign_rec = 12;
-}
-
-message DetectImage {
-    repeated bytes face_images = 1;
-    repeated bytes plate_images = 2;
+    repeated Face faces = 1;
+    repeated Plate plates = 2;
+    repeated CigPack cig_packs = 3;
+    repeated CigLicense cig_licenses = 4;
+    repeated ShopLicense shop_licenses = 5;
+    repeated ShopSign shop_signs = 6;
 }
 
 message RecordRequest {}
@@ -139,12 +114,11 @@ message Msg {
         EdgeStatusResponse edge_status_response = 5;
         InferRequest infer_request = 6;
         InferResponse infer_response = 7;
-        DetectImage detect_image = 8;
-        RecordRequest record_request = 9;
-        RecordResponse record_response = 10;
-        TaskNotice task_notice = 11;
-        RetailInfo retail_info = 12;
-        UpdateApp update_app = 13;
+        RecordRequest record_request = 8;
+        RecordResponse record_response = 9;
+        TaskNotice task_notice = 10;
+        RetailInfo retail_info = 11;
+        UpdateApp update_app = 12;
     }
 }
 

@@ -32,9 +32,10 @@ message InferRequest {
         CIG_LICENSE = 3;    // 烟草证
         SHOP_LICENSE = 4;   // 营业执照
         SHOP_SIGN = 5;      // 店铺招牌
+        LAW_ENFORCE = 6;    // 亮证执法
     }
     bytes image = 1;
-    Type type = 2;
+    repeated Type types = 2;
 }
 message InferResponse {
     message Box {
@@ -69,12 +70,16 @@ message InferResponse {
     message ShopSign {
         string text = 1;
     }
+    message LawEnforce {
+        string text = 1;
+    }
     repeated Face faces = 1;
     repeated Plate plates = 2;
     repeated CigPack cig_packs = 3;
     repeated CigLicense cig_licenses = 4;
     repeated ShopLicense shop_licenses = 5;
     repeated ShopSign shop_signs = 6;
+    repeated LawEnforce law_enforces = 7;
 }
 
 message RecordRequest {}

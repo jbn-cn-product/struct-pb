@@ -130,4 +130,6 @@ message Msg {
 message Broadcast {
     string ssid = 1;
     string password = 2;
+    bytes gateway = 3;
+    int32 port = 4;
 }

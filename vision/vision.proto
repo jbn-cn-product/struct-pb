@@ -24,7 +24,7 @@ message EdgeStatusResponse {
     float battery = 2;
 }
 
-message InferRequest {
+message DetectRequest {
     enum Type {
         FACE = 0;           // 人脸
         PLATE = 1;          // 车牌
@@ -37,7 +37,7 @@ message InferRequest {
     bytes image = 1;
     repeated Type types = 2;
 }
-message InferResponse {
+message DetectResponse {
     message Box {
         message Point {
             int32 x = 1;
@@ -117,8 +117,8 @@ message Msg {
         EdgeBuzz edge_buzz = 3;
         EdgeStatusRequest edge_status_request = 4;
         EdgeStatusResponse edge_status_response = 5;
-        InferRequest infer_request = 6;
-        InferResponse infer_response = 7;
+        DetectRequest detect_request = 6;
+        DetectResponse detect_response = 7;
         RecordRequest record_request = 8;
         RecordResponse record_response = 9;
         TaskNotice task_notice = 10;
@@ -128,8 +128,6 @@ message Msg {
 }
 
 message Broadcast {
-    string ssid = 1;
+    bytes bssid = 1; // 手机热点的MAC地址 如[42,7E,20,73,60,E8]
     string password = 2;
-    bytes gateway = 3;
-    int32 port = 4;
 }

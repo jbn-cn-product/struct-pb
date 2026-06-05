@@ -128,6 +128,6 @@ message Msg {
 }
 
 message Broadcast {
-    string ssid = 1;
+    fixed32 ssid = 1; // 取IMEI后8位作为热点名称
     string password = 2;
 }

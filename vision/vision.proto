@@ -128,6 +128,6 @@ message Msg {
 }
 
 message Broadcast {
-    bytes bssid = 1; // 手机热点的MAC地址 如[42,7E,20,73,60,E8]
+    string ssid = 1;
     string password = 2;
 }

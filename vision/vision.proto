@@ -82,12 +82,6 @@ message DetectResponse {
     repeated LawEnforce law_enforces = 7;
 }
 
-message RecordRequest {}
-message RecordResponse {
-    bytes video = 1;
-    bytes cover_image = 2;
-}
-
 message TaskNotice {
     bool status = 1; // true开始 false结束
 }
@@ -119,11 +113,9 @@ message Msg {
         EdgeStatusResponse edge_status_response = 5;
         DetectRequest detect_request = 6;
         DetectResponse detect_response = 7;
-        RecordRequest record_request = 8;
-        RecordResponse record_response = 9;
-        TaskNotice task_notice = 10;
-        RetailInfo retail_info = 11;
-        UpdateApp update_app = 12;
+        TaskNotice task_notice = 8;
+        RetailInfo retail_info = 9;
+        UpdateApp update_app = 10;
     }
 }
 

@@ -80,6 +80,7 @@ message UpdateApp { // 手机 -> 记录仪, 边缘
 }
 message TaskNotice { // 手机 -> 记录仪
     bool status = 1; // true开始 false结束
+    optional Geo geo = 2; // 任务开始时发送
 }
 message LawEnforce { // 记录仪 -> 手机
     bytes image = 1;

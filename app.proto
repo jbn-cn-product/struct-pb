@@ -82,7 +82,10 @@ message TaskNotice { // 手机 -> 记录仪
     bool status = 1; // true开始 false结束
     optional Geo geo = 2; // 任务开始时发送
 }
-message LawEnforce { // 记录仪 -> 手机
+message LawEnforceReq { // 手机 -> 记录仪
+    bool status = 1; // true开始 false结束
+}
+message LawEnforceResp { // 记录仪 -> 手机
     bytes image = 1;
 }
 
@@ -96,6 +99,7 @@ message Msg {
         DetectResp detect_resp = 5;
         UpdateApp update_app = 6;
         TaskNotice task_notice = 7;
-        LawEnforce law_enforce = 8;
+        LawEnforceReq law_enforce_req = 8;
+        LawEnforceResp law_enforce_resp = 9;
     }
 }

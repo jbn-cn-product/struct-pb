@@ -88,7 +88,6 @@ message DetectResp {
     optional string id_retail = 7;          // 手机 -> 服务器
     ShopSignResult shop_sign_result = 8;
     LawEnforceResult law_enforce_result = 9;
-    string timestamp = 10;                   // yyyyMMdd_HH-mm-ss-fff
 }
 message UpdateApp { // 手机 -> 记录仪, 边缘
     bytes file = 1;

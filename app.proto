@@ -50,6 +50,7 @@ message ShopSignResult {
 }
 message LawEnforceResult {
     repeated string texts = 1;
+    bytes image = 2;
 }
 
 /* layer 1 */
